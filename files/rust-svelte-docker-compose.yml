@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  # Frontend (Svelte app)
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: svelte-app
+    ports:
+      - "3000:3000"  # Expose the frontend port
+    networks:
+      - app-network
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: production
+
+  # Backend (Rust app)
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: rust-backend
+    ports:
+      - "8080:8080"  # Expose the backend port
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://appuser:apppassword@postgres:5432/appdb
+
+  # PostgreSQL service
+  postgres:
+    image: postgres:13-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+      POSTGRES_DB: appdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"  # Expose the PostgreSQL port
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

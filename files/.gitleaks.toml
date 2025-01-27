@@ -1,0 +1,6 @@
+[[rules]]
+description = "Detect .env files"
+regex = '''(?i)(\w+=\w+)'''
+tags = ["env"]
+path = ".env"
+id = "env-file-detection"
