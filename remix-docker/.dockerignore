@@ -1,0 +1,41 @@
+# Node dependencies (should be installed inside the container)
+node_modules
+
+# Build artifacts (only copy built files in final stage)
+build
+dist
+
+# Logs and temp files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.DS_Store
+*.swp
+*.swo
+*.swn
+*.bak
+
+# Editor and OS-generated files
+.vscode
+.idea
+*.iml
+*.log
+*.out
+*.pid
+*.seed
+*.tgz
+*.gz
+*.zip
+*.tmp
+*.cache
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Docker ignore itself
+.dockerignore
+
